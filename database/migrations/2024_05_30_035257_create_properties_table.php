@@ -15,7 +15,7 @@ class CreatePropertiesTable extends Migration
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->id();           
-            //$table->foreignId('type_id')->constrained();        
+            $table->foreignId('type_id')->constrained();        
             $table->string('title');
             $table->string('condition')->default("Nuevo");            
             $table->integer('cost')->default(0); 

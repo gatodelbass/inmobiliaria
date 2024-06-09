@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 Use App\Http\Controllers\PropertyController;
+Use App\Http\Controllers\TypeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -25,6 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('properties', PropertyController::class);
+    Route::resource('types', TypeController::class);
 });
 
 

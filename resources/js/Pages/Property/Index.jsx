@@ -43,13 +43,13 @@ const Index = ({ auth, properties }) => {
                                     <label for="checkbox-all" class="sr-only">checkbox</label>
                                 </div>
                             </th>
-                            <th scope="col" class="py-3 px-6  tracking-wider text-left  dark:text-gray-400">
+                            <th scope="col" class="py-3 px-6  tracking-wider text-left  ">
                                 Product Name
                             </th >
-                            <th scope="col" class="py-3 px-6 tracking-wider text-left  dark:text-gray-400">
+                            <th scope="col" class="py-3 px-6 tracking-wider text-left  ">
                                 Category
                             </th>
-                            <th scope="col" class="py-3 px-6 tracking-wider text-left  dark:text-gray-400">
+                            <th scope="col" class="py-3 px-6 tracking-wider text-left  ">
                                 Price
                             </th>
                             <th scope="col" class="p-4">
