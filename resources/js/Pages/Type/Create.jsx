@@ -1,8 +1,18 @@
 import React from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
+import { useForm } from "@inertiajs/react";
 
 const Index = ({ auth, types }) => {
+  const { data, setData, post, processing, errors } = useForm({
+    type: "",
+  });
+
+  function submit(e) {
+    e.preventDefault();
+    post("/types");
+  }
+
   return (
     <AuthenticatedLayout
       user={auth.user}
@@ -14,102 +24,153 @@ const Index = ({ auth, types }) => {
     >
       <Head title="Inmuebles" />
 
-      <div className="py-12">
-        <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-          <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4 text-center">
-            <div class="mx-auto block max-w-md rounded-lg bg-white p-6 shadow-4 dark:bg-surface-dark">
-              <form>
-                <div class="grid grid-cols-2 gap-4">
-                  <div class="relative mb-6" data-twe-input-wrapper-init>
-                    <input
-                      type="text"
-                      class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
-                      id="exampleInput123"
-                      aria-describedby="emailHelp123"
-                      placeholder="First name"
-                    />
-                    <label
-                      for="emailHelp123"
-                      class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-300 dark:peer-focus:text-primary"
-                    >
-                      First name
-                    </label>
-                  </div>
+      {JSON.stringify(data)}
 
-                  <div class="relative mb-6" data-twe-input-wrapper-init>
-                    <input
-                      type="text"
-                      class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
-                      id="exampleInput124"
-                      aria-describedby="emailHelp124"
-                      placeholder="Last name"
-                    />
-                    <label
-                      for="exampleInput124"
-                      class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-300 dark:peer-focus:text-primary"
-                    >
-                      Last name
-                    </label>
-                  </div>
-                </div>
+      <div className="max-w-4xl mx-auto mt-10 bg-amber-50 border-1">
+        <form onSubmit={submit}>
+          <div className="py-3 mx-auto sm:px-6 lg:px-8">
+            <div className="flex justify-center py-4">
+              <div className="flex bg-blueGray-800 rounded-full md:p-4 p-2 border-1 border-gray-300">
+                <img src="bottleIcon" className="w-10" />
+              </div>
+            </div>
+            <div className="flex justify-center mb-4">
+              <div className="flex">
+                <h1 className="text-gray-600 font-bold md:text-2xl text-xl">
+                  Crear tipo de producto
+                </h1>
+              </div>
+            </div>
 
-                <div class="relative mb-6" data-twe-input-wrapper-init>
-                  <input
-                    type="email"
-                    class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
-                    id="exampleInput125"
-                    placeholder="Email address"
-                  />
-                  <label
-                    for="exampleInput125"
-                    class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-300 dark:peer-focus:text-primary"
-                  >
-                    Email address
+            <div className="flex flex-wrap">
+              <div className="w-full md:w-2/3 mb-4 px-2">
+                <label for="name">Tipo: </label>
+                <input
+                  value={data.type}
+                  onChange={(e) => setData("type", e.target.value)}
+                  type="text"
+                  className="mt-1 block w-full rounded-sm"
+                />
+                <input-error className="mt-2" />
+              </div>
+
+              <div className="w-full md:w-1/3 mb-4 px-2">
+                <jet-label for="name">Estado: </jet-label>
+                <jet-select id="" className="mt-1 block w-full" required />
+                <input-error className="mt-2" />
+              </div>
+
+              <div className="w-full md:w-1/3 mb-4 px-2">
+                <jet-label for="name">Marca:</jet-label>
+                <jet-select id="" className="mt-1 block w-full" required />
+                <input-error className="mt-2" />
+              </div>
+
+              <div className="w-full md:w-1/3 mb-4 px-2">
+                <jet-label for="name">Categoria:</jet-label>
+                <jet-select id="" className="mt-1 block w-full" required />
+                <input-error className="mt-2" />
+              </div>
+
+              <div className="w-full md:w-1/3 mb-4 px-2">
+                <jet-label for="volume">Contenido (ml):</jet-label>
+                <input
+                  id="volume"
+                  type="number"
+                  className="mt-1 block w-full"
+                />
+                <input-error className="mt-2" />
+              </div>
+
+              <div className="w-full md:w-1/3 mb-4 px-2">
+                <jet-label for="buy_cost">Precio compra:</jet-label>
+                <input
+                  id="buy_cost"
+                  type="number"
+                  className="mt-1 block w-full"
+                />
+                <input-error className="mt-2" />
+              </div>
+
+              <div className="w-full md:w-1/3 mb-4 px-2">
+                <jet-label for="sell_cost">Precio venta:</jet-label>
+                <input
+                  id="sell_cost"
+                  type="number"
+                  className="mt-1 block w-full"
+                />
+                <input-error className="mt-2" />
+              </div>
+
+              <div className="w-full md:w-1/3 mb-4 px-2">
+                <jet-label for="discount">Descuento:</jet-label>
+                <input
+                  id="discount"
+                  type="number"
+                  className="mt-1 block w-full"
+                  v-model="form.discount"
+                />
+                <input-error className="mt-2" />
+              </div>
+
+              <div className="w-full mb-4 px-2">
+                <jet-label for="notes">Notas:</jet-label>
+                <jet-text-area
+                  id="notes"
+                  className="mt-1 block w-full"
+                  v-model="form.notes"
+                ></jet-text-area>
+                <input-error className="mt-2" />
+              </div>
+
+              <div className="w-full mb-4 px-2">
+                <jet-label for="notes">Imagen:</jet-label>
+
+                <div className="flex items-center justify-center w-full">
+                  <label className="flex flex-col border-4 border-dashed w-full h-32 hover:bg-gray-100 hover:border-gray-300 group">
+                    <div className="flex flex-col items-center justify-center pt-7">
+                      <svg
+                        className="w-10 h-10 text-blueGray-500 group-hover:text-blueGray-600"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                        ></path>
+                      </svg>
+                      <p className="lowercase text-sm text-gray-400 group-hover:text-blueGray-600 pt-1 tracking-wider">
+                        (400px x 600px)
+                      </p>
+                    </div>
+                    <input type="file" className="hidden" />
                   </label>
                 </div>
 
-                <div class="relative mb-6" data-twe-input-wrapper-init>
-                  <input
-                    type="password"
-                    class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
-                    id="exampleInput126"
-                    placeholder="Password"
-                  />
-                  <label
-                    for="exampleInput126"
-                    class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-300 dark:peer-focus:text-primary"
-                  >
-                    Password
-                  </label>
-                </div>
-
-                <div class="mb-6 flex items-center justify-center">
-                  <input
-                    class="relative float-left -ms-[1.5rem] me-[6px] mt-[0.15rem] h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-secondary-500 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] checked:border-primary checked:bg-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ms-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:-mt-px checked:focus:after:ms-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent rtl:float-right dark:border-neutral-400 dark:checked:border-primary dark:checked:bg-primary"
-                    type="checkbox"
-                    value=""
-                    id="exampleCheck25"
-                  />
-                  <label
-                    class="inline-block ps-[0.15rem] pt-[0.15rem] hover:cursor-pointer"
-                    for="exampleCheck25"
-                  >
-                    Subscribe to our newsletter
-                  </label>
-                </div>
-
-                <button
-                  type="submit"
-                  class="inline-block w-full rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
-                  data-twe-ripple-init
-                  data-twe-ripple-color="light"
-                >
-                  Sign up
-                </button>
-              </form>
+                <input-error className="mt-2" />
+              </div>
             </div>
           </div>
-        </div>
+
+          <div className="flex items-center justify-center px-4 mb-4 md:gap-8 gap-4">
+            <a
+              href={route("types.index")}
+              className="w-auto bg-blueGray-700 hover:bg-gray-600 rounded-sm shadow-xl font-medium text-amber-300 px-4 py-2"
+            >
+              Cancelar
+            </a>
+            <button
+              type="submit"
+              className="w-auto bg-teal-500 hover:bg-teal-600 rounded-sm shadow-xl font-medium text-blueGray-700 px-4 py-2"
+            >
+              Crear
+            </button>
+          </div>
+        </form>
       </div>
     </AuthenticatedLayout>
   );
