@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use App\Models\Property;
+use App\Models\Type;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\PropertyRequest;
 use App\Models\PropertyImage;
@@ -25,9 +26,11 @@ class PropertyController extends Controller
         Auth::user()->userAdmin();
 
         $properties = Property::orderBy("title")->get();
+      
 
         return Inertia::render('Property/Index', [
-            'properties' => $properties,
+            'properties' => $properties->load(['type']),
+            'types' => $types
         ]);
     }
 
@@ -39,7 +42,10 @@ class PropertyController extends Controller
     public function create()
     {
         Auth::user()->userAdmin();
-        return Inertia::render('Property/Create', []);
+        $types = Type::all();
+        return Inertia::render('Property/Create', [
+            'types' => $types
+        ]);
     }
 
     /**
