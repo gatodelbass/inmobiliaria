@@ -26,6 +26,7 @@ class PropertyController extends Controller
         Auth::user()->userAdmin();
 
         $properties = Property::orderBy("title")->get();
+        $types = Type::all();
       
 
         return Inertia::render('Property/Index', [
@@ -41,10 +42,15 @@ class PropertyController extends Controller
      */
     public function create()
     {
+
+       // dd(config('constants.property_status'));
+
         Auth::user()->userAdmin();
         $types = Type::all();
+
         return Inertia::render('Property/Create', [
-            'types' => $types
+            'types' => $types,
+            "propertyStatus" => config('constants.property_status')
         ]);
     }
 
@@ -58,13 +64,10 @@ class PropertyController extends Controller
     {
         Auth::user()->userAdmin();
 
-        $product = Property::create($request->validated());
 
-        if ($request->image != null) {
-            $path = Storage::disk('public')->put('properties', $request->image);
-            $product->img = $path;
-            $product->save();
-        }
+       
+        $property = Property::create($request->validated());
+
 
         return Redirect::route('properties.index');
     }
@@ -75,13 +78,13 @@ class PropertyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Property $product)
+    public function show(Property $property)
     {
         Auth::user()->userAdmin();
         $wallpapers = Wallpaper::all();
 
         return Inertia::render('Property/Show', [
-            'product' => $product->load(['productImages']),
+            'property' => $property->load(['propertyImages']),
             'wallpapers' => $wallpapers,
         ]);
     }
@@ -92,37 +95,37 @@ class PropertyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Property $product)
+    public function edit(Property $property)
     {
         Auth::user()->userAdmin();
 
-        $colors = Helper::productColors();
+        $colors = Helper::propertyColors();
 
         return Inertia::render('Property/Edit', [
-            'record' => $product,
+            'record' => $property,
             'colors' => $colors,
         ]);
     }
 
 
-    public function update(PropertyRequest $request, Property $product)
+    public function update(PropertyRequest $request, Property $property)
     {
         Auth::user()->userAdmin();
 
-        $product->update($request->validated());
-        $previousImage = $product->img;
+        $property->update($request->validated());
+        $previousImage = $property->img;
 
         if ($request->img) {
 
             $path = Storage::disk('public')->put('properties', $request->img);
-            $product->img = $path;
+            $property->img = $path;
 
             if (!is_null($previousImage)) {
                 Storage::disk('public')->delete($previousImage);
             }
         }
 
-        $product->save();
+        $property->save();
         return Redirect::route('properties.index');
     }
 
@@ -148,27 +151,27 @@ class PropertyController extends Controller
         return Redirect::route('properties.index');
     }
 
-    public function images($productId)
+    public function images($propertyId)
     {
         Auth::user()->userAdmin();
-        $product = Property::find($productId);
+        $property = Property::find($propertyId);
         return Inertia::render('Property/Images', [
-            'product' => $product->load(['productImages']),
+            'property' => $property->load(['propertyImages']),
         ]);
     }
 
-    public function addImage(PropertyImageRequest $request, Property $product)
+    public function addImage(PropertyImageRequest $request, Property $property)
     {
         Auth::user()->userAdmin();
 
         if ($request->image) {
             $path = Storage::disk('public')->put('properties', $request->image);
-            $productImage = new PropertyImage();
-            $productImage->product_id = $request->product_id;
-            $productImage->image = $path;
-            $productImage->save();
+            $propertyImage = new PropertyImage();
+            $propertyImage->property_id = $request->property_id;
+            $propertyImage->image = $path;
+            $propertyImage->save();
         }
-        return Redirect::route('properties.images', [$request->product_id]);
+        return Redirect::route('properties.images', [$request->property_id]);
     }
 
     public function deleteImage($imageId)
@@ -179,12 +182,12 @@ class PropertyController extends Controller
         return Redirect::route('properties.index');
     }
 
-    public function productDetail($productId)
+    public function propertyDetail($propertyId)
     {
-        $product = Property::find($productId);
+        $property = Property::find($propertyId);
 
         return Inertia::render('Showcase/PropertyDetail', [
-            'product' => $product->load("productImages")
+            'property' => $property->load("propertyImages")
         ]);
     }
 }

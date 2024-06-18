@@ -3,9 +3,9 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { useForm } from "@inertiajs/react";
 
-const Create = ({ auth, properties, types }) => {
+const Create = ({ auth, properties, types, propertyStatus }) => {
   const { data, setData, post, processing, errors } = useForm({
-    type: "",
+    type_id: "",
     title: "",
     condition: "",
     cost: 0,
@@ -37,6 +37,8 @@ const Create = ({ auth, properties, types }) => {
     >
       <Head title="Inmuebles" />
 
+      {JSON.stringify(propertyStatus)}
+
       {JSON.stringify(data)}
 
       <div className="max-w-4xl mx-auto mt-10 bg-amber-50 border-1">
@@ -62,7 +64,7 @@ const Create = ({ auth, properties, types }) => {
                 <select
                   name="categorias"
                   id="selCategorias"
-                  onChange={(e) => setData("type", e.target.value)}
+                  onChange={(e) => setData("type_id", e.target.value)}
                 >
                   <option value={-1}>Seleccione una opción: </option>
                   {types.map((type) => (
@@ -80,49 +82,35 @@ const Create = ({ auth, properties, types }) => {
                 <label for="name">Titulo: </label>
                 <input
                   value={data.property}
-                  onChange={(e) => setData("property", e.target.value)}
-                  property="text"
+                  onChange={(e) => setData("title", e.target.value)}
                   className="mt-1 block w-full rounded-sm"
                 />
                 <input-error className="mt-2" />
               </div>
 
               <div className="w-full md:w-1/3 mb-4 px-2">
-                <label for="name">Marca:</label>
-                <jet-select id="" className="mt-1 block w-full" required />
+                <label for="name">Estado:</label>
+                <select
+                  name="categorias"
+                  id="selCategorias"
+                  onChange={(e) => setData("condition", e.target.value)}
+                >
+                  <option value={-1}>Seleccione una opción: </option>
+                  {propertyStatus.map((status) => (
+                    <option key={status} value={status}>
+                      {" "}
+                      {status}
+                    </option>
+                  ))}
+                </select>
                 <input-error className="mt-2" />
               </div>
 
               <div className="w-full md:w-1/3 mb-4 px-2">
-                <label for="name">Categoria:</label>
-                <jet-select id="" className="mt-1 block w-full" required />
-                <input-error className="mt-2" />
-              </div>
-
-              <div className="w-full md:w-1/3 mb-4 px-2">
-                <label for="volume">Contenido (ml):</label>
+                <label for="volume">Precio:</label>
                 <input
+                  onChange={(e) => setData("cost", e.target.value)}
                   id="volume"
-                  property="number"
-                  className="mt-1 block w-full"
-                />
-                <input-error className="mt-2" />
-              </div>
-
-              <div className="w-full md:w-1/3 mb-4 px-2">
-                <label for="buy_cost">Precio compra:</label>
-                <input
-                  id="buy_cost"
-                  property="number"
-                  className="mt-1 block w-full"
-                />
-                <input-error className="mt-2" />
-              </div>
-
-              <div className="w-full md:w-1/3 mb-4 px-2">
-                <label for="sell_cost">Precio venta:</label>
-                <input
-                  id="sell_cost"
                   property="number"
                   className="mt-1 block w-full"
                 />
@@ -132,6 +120,7 @@ const Create = ({ auth, properties, types }) => {
               <div className="w-full md:w-1/3 mb-4 px-2">
                 <label for="discount">Descuento:</label>
                 <input
+                  onChange={(e) => setData("discount", e.target.value)}
                   id="discount"
                   property="number"
                   className="mt-1 block w-full"
@@ -141,12 +130,19 @@ const Create = ({ auth, properties, types }) => {
               </div>
 
               <div className="w-full mb-4 px-2">
+                <label for="name">Direccion: </label>
+                <input
+                  value={data.address}
+                  onChange={(e) => setData("address", e.target.value)}
+                  className="mt-1 block w-full rounded-sm"
+                />
+                <input-error className="mt-2" />
+              </div>
+
+              <div className="w-full mb-4 px-2">
                 <label for="notes">Notas:</label>
-                <jet-text-area
-                  id="notes"
-                  className="mt-1 block w-full"
-                  v-model="form.notes"
-                ></jet-text-area>
+                <textarea rows="3" name="" id=""></textarea>
+
                 <input-error className="mt-2" />
               </div>
 
