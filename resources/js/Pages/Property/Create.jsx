@@ -59,11 +59,11 @@ const Create = ({ auth, properties, types, propertyStatus }) => {
 
             <div className="flex flex-wrap">
               <div className="w-full md:w-1/3 mb-4 px-2">
-                <label for="name">Tipo: </label>
+                <label for="type">Tipo   : </label>
 
                 <select
-                  name="categorias"
-                  id="selCategorias"
+                  name="type"
+                  id="type"
                   onChange={(e) => setData("type_id", e.target.value)}
                 >
                   <option value={-1}>Seleccione una opción: </option>
@@ -140,7 +140,7 @@ const Create = ({ auth, properties, types, propertyStatus }) => {
               </div>
 
               <div className="w-full mb-4 px-2">
-                <label for="notes">Notas:</label>
+                <label for="notes">Notas adicionales:</label>
                 <textarea rows="3" name="" id=""></textarea>
 
                 <input-error className="mt-2" />

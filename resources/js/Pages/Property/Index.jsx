@@ -28,7 +28,7 @@ const Index = ({ auth, properties }) => {
               Nuevo
             </Link>
 
-            <div class="max-w-2xl mx-auto">
+            <div class="max-w-6xl mx-auto">
               <div class="flex flex-col">
                 <div class="overflow-x-auto shadow-md sm:rounded-lg">
                   <div class="inline-block min-w-full align-middle">
@@ -41,6 +41,9 @@ const Index = ({ auth, properties }) => {
                             </th>
                             <th scope="col" class="py-3 px-6 tracking-wider  ">
                               Tipo
+                            </th>
+                            <th scope="col" class="py-3 px-6 tracking-wider  ">
+                              Estado
                             </th>
                             <th scope="col" class="py-3 px-6  tracking-wider  ">
                               Titulo
@@ -62,6 +65,9 @@ const Index = ({ auth, properties }) => {
                               </td>
                               <td class="py-2 px-6  text-gray-900 whitespace-nowrap dark:text-white">
                                 {property.type.type}
+                              </td>
+                              <td class="py-2 px-6  text-gray-900 whitespace-nowrap dark:text-white">
+                                {property.status}
                               </td>
                               <td class="py-2 px-6  text-gray-900 whitespace-nowrap dark:text-white">
                                 {property.title}
