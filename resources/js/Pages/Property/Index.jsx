@@ -15,10 +15,10 @@ const Index = ({ auth, properties }) => {
     >
       <Head title="Inmuebles" />
 
-      <div className="py-12">
+      <div className="py-6">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-          <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4 text-center">
-            <h1 className="text-lg font-semibold py-2">Inmuebles</h1>
+          <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-2 text-center">
+            <h1 className="text-lg font-semibold py-0">Inmuebles</h1>
 
             <Link
               as="button"
@@ -29,73 +29,69 @@ const Index = ({ auth, properties }) => {
             </Link>
 
             <div class="max-w-6xl mx-auto">
-              <div class="flex flex-col">
-                <div class="overflow-x-auto shadow-md sm:rounded-lg">
-                  <div class="inline-block min-w-full align-middle">
-                    <div class="overflow-hidden my2">
-                      <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700 text-base">
-                        <thead class="bg-gray-800 ">
-                          <tr class="text-teal-500">
-                            <th scope="col" class="py-3 px-6 tracking-wider  ">
-                              ID
-                            </th>
-                            <th scope="col" class="py-3 px-6 tracking-wider  ">
-                              Tipo
-                            </th>
-                            <th scope="col" class="py-3 px-6 tracking-wider  ">
-                              Estado
-                            </th>
-                            <th scope="col" class="py-3 px-6  tracking-wider  ">
-                              Titulo
-                            </th>
-                            <th scope="col" class="py-3 px-6 tracking-wider  ">
-                              Precio
-                            </th>
+              <div class="overflow-x-auto shadow-md sm:rounded-lg">
+                <div class="inline-block min-w-full align-middle">
+                  <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700 text-base">
+                    <thead class="bg-gray-800 ">
+                      <tr class="text-teal-500">
+                        <th scope="col" class="py-3 px-6 tracking-wider  ">
+                          ID
+                        </th>
+                        <th scope="col" class="py-3 px-6 tracking-wider  ">
+                          Tipo
+                        </th>
+                        <th scope="col" class="py-3 px-6 tracking-wider  ">
+                          Estado
+                        </th>
+                        <th scope="col" class="py-3 px-6  tracking-wider  ">
+                          Titulo
+                        </th>
+                        <th scope="col" class="py-3 px-6 tracking-wider  ">
+                          Precio
+                        </th>
 
-                            <th scope="col" class="p-4">
-                              <span class="sr-only">Edit</span>
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                          {properties.map((property) => (
-                            <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-                              <td class="py-2 px-6  text-gray-900 whitespace-nowrap dark:text-white">
-                                {property.id}
-                              </td>
-                              <td class="py-2 px-6  text-gray-900 whitespace-nowrap dark:text-white">
-                                {property.type.type}
-                              </td>
-                              <td class="py-2 px-6  text-gray-900 whitespace-nowrap dark:text-white">
-                                {property.status}
-                              </td>
-                              <td class="py-2 px-6  text-gray-900 whitespace-nowrap dark:text-white">
-                                {property.title}
-                              </td>
-                              <td class="py-2 px-6  text-gray-500 whitespace-nowrap dark:text-white">
-                                {property.cost}
-                              </td>
+                        <th scope="col" class="p-4">
+                          <span class="sr-only">Edit</span>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                      {properties.map((property) => (
+                        <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                          <td class="py-2 px-6  text-gray-900 whitespace-nowrap dark:text-white">
+                            {property.id}
+                          </td>
+                          <td class="py-2 px-6  text-gray-900 whitespace-nowrap dark:text-white">
+                            {property.type.type}
+                          </td>
+                          <td class="py-2 px-6  text-gray-900 whitespace-nowrap dark:text-white">
+                            {property.status}
+                          </td>
+                          <td class="py-2 px-6  text-gray-900 whitespace-nowrap dark:text-white">
+                            {property.title}
+                          </td>
+                          <td class="py-2 px-6  text-gray-500 whitespace-nowrap dark:text-white">
+                            {property.cost}
+                          </td>
 
-                              <td class="py-2 px-6   text-right whitespace-nowrap">
-                                <a
-                                  href="#"
-                                  class="text-teal-400  hover:underline mx-1"
-                                >
-                                  Edit
-                                </a>
-                                <a
-                                  href="#"
-                                  class="text-red-400  hover:underline mx-1"
-                                >
-                                  Delete
-                                </a>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
+                          <td class="py-2 px-6   text-right whitespace-nowrap">
+                            <a
+                              href={route("properties.edit", property.id)}
+                              class="text-teal-400  hover:underline mx-1"
+                            >
+                              Edit
+                            </a>
+                            <a
+                              href="#"
+                              class="text-red-400  hover:underline mx-1"
+                            >
+                              Delete
+                            </a>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>

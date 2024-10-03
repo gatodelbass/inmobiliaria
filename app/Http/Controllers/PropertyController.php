@@ -97,14 +97,24 @@ class PropertyController extends Controller
      */
     public function edit(Property $property)
     {
-        Auth::user()->userAdmin();
 
-        $colors = Helper::propertyColors();
+        
+
+        Auth::user()->userAdmin();
+        $types = Type::all();
 
         return Inertia::render('Property/Edit', [
-            'record' => $property,
-            'colors' => $colors,
+            'property' => $property,
+            'types' => $types,
+            "propertyStatus" => config('constants.property_status')
+            
         ]);
+
+
+     
+
+
+
     }
 
 

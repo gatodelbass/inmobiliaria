@@ -2,22 +2,21 @@ import React from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { useForm } from "@inertiajs/react";
-import InputError from '@/Components/InputError';
 
-const Create = ({ auth, properties, types, propertyStatus }) => {
+const Create = ({ auth, property, types, propertyStatus }) => {
   const { data, setData, post, processing, errors } = useForm({
-    type_id: "",
-    title: "",
-    condition: "",
-    cost: 0,
-    discount: 0,
+    type_id: property.type_id,
+    title: property.title,
+    condition: property.condition,
+    cost: property.cost,
+    discount: property.discount,
     description: "",
     address: "",
   });
 
   function submit(e) {
     e.preventDefault();
-    post("/properties");
+    put("/properties");
   }
 
   const handlerCargarArticulos = function (e) {
@@ -38,37 +37,29 @@ const Create = ({ auth, properties, types, propertyStatus }) => {
     >
       <Head title="Inmuebles" />
 
-      {JSON.stringify(propertyStatus)}
+      {JSON.stringify(property)}
 
       {JSON.stringify(data)}
 
-
-      
-
-      <div className="max-w-4xl mx-auto mt-5 bg-gray-800 border-1 text-gray-800 rounded">
+      <div className="max-w-4xl mx-auto mt-10 bg-amber-50 border-1">
         <form onSubmit={submit}>
           <div className="py-3 mx-auto sm:px-6 lg:px-8">
-            <div className="flex justify-center">
-              <div className="flex bg-blueGray-800 rounded-full  p-2 border-1 border-gray-300">
-                <img
-                  src="https://iconmonstr.com/wp-content/g/gd/makefg.php?i=../releases/preview/2017/png/iconmonstr-building-8.png&r=0&g=0&b=0"
-                  className="w-10 bg-teal-500 rounded p-1"
-                />
+            <div className="flex justify-center py-4">
+              <div className="flex bg-blueGray-800 rounded-full md:p-4 p-2 border-1 border-gray-300">
+                <img src="bottleIcon" className="w-10" />
               </div>
             </div>
             <div className="flex justify-center mb-4">
               <div className="flex">
-                <h1 className="text-gray-400 font-bold md:text-2xl text-xl">
-                  Crear inmueble
+                <h1 className="text-gray-600 font-bold md:text-2xl text-xl">
+                  Crear tipo de producto
                 </h1>
               </div>
             </div>
 
             <div className="flex flex-wrap">
               <div className="w-full md:w-1/3 mb-4 px-2">
-                <label className="text-teal-500" for="type">
-                  Tipo :{" "}
-                </label>
+                <label for="type">Tipo : </label>
 
                 <select
                   name="type"
@@ -88,26 +79,17 @@ const Create = ({ auth, properties, types, propertyStatus }) => {
                 <input-error className="mt-2" />
               </div>
               <div className="w-full md:w-2/3 mb-4 px-2">
-                <label className="text-teal-500" for="name">
-                  Titulo:{" "}
-                </label>
+                <label for="name">Titulo: </label>
                 <input
-                  value={data.property}
+                  value={data.title}
                   onChange={(e) => setData("title", e.target.value)}
-                  className=" block w-full rounded-sm"
+                  className="mt-1 block w-full rounded-sm"
                 />
-                 <InputError message={errors.title} className="mt-2" />
-
-
-
-           
-                <input-error  className="mt-2" />
+                <input-error className="mt-2" />
               </div>
 
               <div className="w-full md:w-1/3 mb-4 px-2">
-                <label className="text-teal-500" for="name">
-                  Estado:
-                </label>
+                <label for="name">Estado:</label>
                 <select
                   name="categorias"
                   id="selCategorias"
@@ -125,60 +107,51 @@ const Create = ({ auth, properties, types, propertyStatus }) => {
               </div>
 
               <div className="w-full md:w-1/3 mb-4 px-2">
-                <label className="text-teal-500" for="volume">
-                  Precio:
-                </label>
+                <label for="volume">Precio:</label>
                 <input
+                  value={property.cost}
                   onChange={(e) => setData("cost", e.target.value)}
                   id="volume"
                   property="number"
-                  className="block w-full"
+                  className="mt-1 block w-full"
                 />
                 <input-error className="mt-2" />
               </div>
 
               <div className="w-full md:w-1/3 mb-4 px-2">
-                <label className="text-teal-500" for="discount">
-                  Descuento:
-                </label>
+                <label for="discount">Descuento:</label>
                 <input
                   onChange={(e) => setData("discount", e.target.value)}
                   id="discount"
                   property="number"
-                  className="block w-full"
+                  className="mt-1 block w-full"
                   v-model="form.discount"
                 />
                 <input-error className="mt-2" />
               </div>
 
               <div className="w-full mb-4 px-2">
-                <label className="text-teal-500" for="name">
-                  Direccion:{" "}
-                </label>
+                <label for="name">Direccion: </label>
                 <input
                   value={data.address}
                   onChange={(e) => setData("address", e.target.value)}
-                  className="block w-full rounded-sm"
+                  className="mt-1 block w-full rounded-sm"
                 />
                 <input-error className="mt-2" />
               </div>
 
               <div className="w-full mb-4 px-2">
-                <label className="text-teal-500" for="notes">
-                  Notas adicionales:{" "}
-                </label>
-                <textarea className="w-full" rows="3" name="" id=""></textarea>
+                <label for="notes">Notas adicionales:</label>
+                <textarea rows="3" name="" id=""></textarea>
 
                 <input-error className="mt-2" />
               </div>
 
               <div className="w-full mb-4 px-2">
-                <label className="text-teal-500" for="notes">
-                  Imagen:
-                </label>
+                <label for="notes">Imagen:</label>
 
                 <div className="flex items-center justify-center w-full">
-                  <label className="text-teal-500 flex flex-col border-4 border-dashed w-full h-32 hover:bg-gray-100 hover:border-gray-300 group">
+                  <label className="flex flex-col border-4 border-dashed w-full h-32 hover:bg-gray-100 hover:border-gray-300 group">
                     <div className="flex flex-col items-center justify-center pt-7">
                       <svg
                         className="w-10 h-10 text-blueGray-500 group-hover:text-blueGray-600"
