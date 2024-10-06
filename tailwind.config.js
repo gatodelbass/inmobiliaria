@@ -10,6 +10,8 @@ export default {
         './resources/js/**/*.jsx',
     ],
 
+   
+
     theme: {
         extend: {
             fontFamily: {

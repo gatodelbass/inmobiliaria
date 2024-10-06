@@ -2,6 +2,7 @@ import React from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { Link } from "@inertiajs/react";
+import Pagination  from "@/Components/Pagination";
 
 const Index = ({ auth, properties }) => {
   return (
@@ -13,7 +14,7 @@ const Index = ({ auth, properties }) => {
         </h2>
       }
     >
-      <Head title="Inmuebles" />
+      <Head title="Inmuebles" /> 
 
       <div className="py-6">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -56,7 +57,7 @@ const Index = ({ auth, properties }) => {
                       </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                      {properties.map((property) => (
+                      {properties.data.map((property) => (
                         <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
                           <td class="py-2 px-6  text-gray-900 whitespace-nowrap dark:text-white">
                             {property.id}
@@ -94,6 +95,7 @@ const Index = ({ auth, properties }) => {
                   </table>
                 </div>
               </div>
+             {properties && <Pagination pagination={properties}  /> } 
             </div>
           </div>
         </div>

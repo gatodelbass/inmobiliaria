@@ -15,5 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(TypesSeeder::class);
         $this->call(AdminSeeder::class);
+        $this->call(PropertiesSeeder::class);
+
     }
 }

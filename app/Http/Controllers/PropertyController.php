@@ -25,13 +25,13 @@ class PropertyController extends Controller
     {
         Auth::user()->userAdmin();
 
-        $properties = Property::orderBy("title")->get();
-        $types = Type::all();
+        $properties = Property::orderBy("id");
+        
       
 
         return Inertia::render('Property/Index', [
-            'properties' => $properties->load(['type']),
-            'types' => $types
+            'properties' => $properties->with('type')->paginate(10),
+            
         ]);
     }
 
